@@ -19,7 +19,6 @@ void serial_send(void);
 String serialInput = "";
 
 void setup() {
-
     Serial.begin(9600);
 
     INAs_sensors[0] = new INA219(INA_addr_0);
@@ -40,7 +39,6 @@ void loop() {
 }
 
 void read_ina219_values(void) {
-
     for (int i = 0; i < 4; i++) {
         USBs_data[i][0] = INAs_sensors[i]->shuntVoltage() * 1000;      // milivolts
         USBs_data[i][1] = INAs_sensors[i]->busVoltage();               // volts 
