@@ -1,7 +1,7 @@
 #include <Wire.h>
 #include <INA219.h>
 
-#define DELAY_MS 4000
+#define DELAY_MS 2000
 #define BAUD_RATE 9600
 
 const int INA_addr_0 = 0x40;
@@ -12,7 +12,7 @@ const int INA_addr_3 = 0x45;
 INA219 *INAs_sensors[4];
 float USBs_data[4][5];
 
-// Prototype of functions
+// Functions prototypes
 void read_ina219_values(void);
 void serial_send(void);
 
