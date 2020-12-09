@@ -39,24 +39,24 @@ def read_loop():
     while True:
         serial_buffer.flushInput()
 
-        if serial_buffer.inWaiting():
-            try:
-                serial_data = serial_buffer.readline().decode('utf-8').strip()
-                measures = json.loads(serial_data)
-            except:
-                continue
+        try:
+            serial_data = serial_buffer.readline().decode('utf-8').strip()
+            measures = json.loads(serial_data)
 
-            for measure in measures:
-                label_values = {
-                    "board": str(device),
-                    "usb_port": measure['usb_id']
-                }
+        except:
+            continue
 
-                shunt_voltage.labels(**label_values).set(measure['shunt_voltage'])
-                bus_voltage.labels(**label_values).set(measure['bus_voltage'])
-                shunt_current.labels(**label_values).set(measure['current_mA'])
-                load_voltage.labels(**label_values).set(measure['load_voltage'])
-                bus_power.labels(**label_values).set(measure['bus_power'])
+        for measure in measures:
+            label_values = {
+                "board": str(device),
+                "usb_port": measure['usb_id']
+            }
+
+            shunt_voltage.labels(**label_values).set(measure['shunt_voltage'])
+            bus_voltage.labels(**label_values).set(measure['bus_voltage'])
+            shunt_current.labels(**label_values).set(measure['current_mA'])
+            load_voltage.labels(**label_values).set(measure['load_voltage'])
+            bus_power.labels(**label_values).set(measure['bus_power'])
 
         sleep(INTERVAL)
 
