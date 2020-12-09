@@ -10,7 +10,9 @@ INTERVAL = 2
 SERIAL_BAUD_RATE = 9600
 SERVER_PORT = 9999
 
-device = list_ports.comports()[0].device
+#device = list_ports.comports()[0].device
+device = "/dev/ttyUSB0"
+
 serial_buffer = serial.Serial(device, SERIAL_BAUD_RATE)
 
 shunt_voltage = Gauge("shunt_voltage_millivolts",
@@ -36,7 +38,7 @@ bus_power = Gauge("bus_power_watts",
 def read_loop():
     while True:
         serial_buffer.flushInput()
-        
+
         if serial_buffer.inWaiting():
             try:
                 serial_data = serial_buffer.readline().decode('utf-8').strip()
